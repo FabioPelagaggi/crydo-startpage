@@ -15,7 +15,7 @@
 
 <br><br>
 
-# ˗ˏˋ 木漏れ日 ˎˊ˗
+# ˗ˏˋ crydo-startpage ˎˊ˗
 
 **your cozy corner of the internet**
 
@@ -27,10 +27,8 @@
 
 <br><br>
 
-<!-- Quick Links -->
-[**🌸 Try Demo**](https://cookedzera.github.io/komorebi-startpage/) ·
-[**📦 Download**](https://github.com/cookedzera/komorebi-startpage/releases/latest) ·
-[**⭐ Star**](https://github.com/cookedzera/komorebi-startpage)
+[**📦 Download**](https://github.com/FabioPelagaggi/crydo-startpage/releases/latest) ·
+[**⭐ Star**](https://github.com/FabioPelagaggi/crydo-startpage)
 
 <br>
 
@@ -42,7 +40,7 @@
 
 > **komorebi** *(木漏れ日)* — japanese for *"sunlight filtering through leaves"*
 
-a browser startpage for late night coders, students, and anyone who wants their new tab to feel like *home*.
+A personalized browser startpage for late night coders, students, and anyone who wants their new tab to feel like *home*. Forked and heavily customized from the original [komorebi-startpage](https://github.com/cookedzera/komorebi-startpage).
 
 <br>
 
@@ -50,9 +48,14 @@ a browser startpage for late night coders, students, and anyone who wants their 
 
 | | |
 |:---|:---|
-| 🌧️ **ambient sounds** | rain, sparkle, vibes |
+| 🌧️ **ambient sounds** | rain, sparkle, Dragon Ball Lofi & more |
 | 🎨 **glassmorphism** | frosted panels, soft shadows |
-| 🖼️ **custom banners** | 12+ lofi animated backgrounds |
+| 🖼️ **custom banners** | 20+ lofi animated backgrounds per tab |
+| 🌅 **configurable wallpaper** | swap background via `userconfig.js` |
+| 🎮 **gaming tab** | links for MTG, EDHREC, Scryfall & more |
+| 🛒 **shopping tab** | Mercado Livre, Amazon, Shopee, AliExpress |
+| 📺 **streaming tab** | YouTube, Netflix, Prime Video, Disney+, Crunchyroll |
+| 🔮 **pastel blur background** | CSS filter applied in-app, no image editing needed |
 | ⚡ **zero bloat** | no frameworks, just vibes |
 | 🌙 **dark mode** | easy on the eyes at 3am |
 
@@ -64,11 +67,30 @@ a browser startpage for late night coders, students, and anyone who wants their 
 
 <div align="center">
 
-| cozy rain ☔ | late night ✨ |
+| chill tab ☕ | gaming tab 🎮 |
 |:---:|:---:|
-| <img src="docs/screenshots/image2.png" width="380"> | <img src="docs/screenshots/image1.png" width="380"> |
+| <img src="docs/screenshots/image1.png" width="380"> | <img src="docs/screenshots/image2.png" width="380"> |
+
+| myself tab 🌙 | storage tab 📦 |
+|:---:|:---:|
+| <img src="docs/screenshots/image3.png" width="380"> | <img src="docs/screenshots/image4.png" width="380"> |
 
 </div>
+
+<br>
+
+---
+
+### 🗂️ tabs
+
+This startpage is organized into **4 tabs**, each with its own color accent, banner GIF, and curated links:
+
+| Tab | Accent | Sections |
+|:----|:-------|:---------|
+| 🌸 **Chill** | Olive `#a9b665` | Social Media, AI Tools, Shopping, Streaming |
+| 🎮 **Gaming** | Gold `#d4be98` | Game Launchers, Communities, Magic The Gathering |
+| 🌙 **Myself** | Orange `#e78a4e` | Personal links |
+| 📦 **Storage** | Teal `#7daea3` | Google Keep, Calendar, Maps, YouTube Music |
 
 <br>
 
@@ -93,12 +115,15 @@ a browser startpage for late night coders, students, and anyone who wants their 
 
 <div align="center">
 
-*pick your vibe*
+*pick your vibe — assign any banner to any tab in `userconfig.js`*
 
 | | | | |
 |:-:|:-:|:-:|:-:|
-|<img src="src/img/banners/cbg-2.gif" width="100">|<img src="src/img/banners/cbg-3.gif" width="100">|<img src="src/img/banners/cbg-4.gif" width="100">|<img src="src/img/banners/cbg-5.gif" width="100">|
-|<img src="src/img/banners/cbg-6.gif" width="100">|<img src="src/img/banners/cbg-7.gif" width="100">|<img src="src/img/banners/cbg-8.gif" width="100">|<img src="src/img/banners/cbg-9.gif" width="100">|
+|<img src="src/img/banners/cbg-1.gif" width="100">|<img src="src/img/banners/cbg-2.gif" width="100">|<img src="src/img/banners/cbg-3.gif" width="100">|<img src="src/img/banners/cbg-4.gif" width="100">|
+|<img src="src/img/banners/cbg-5.gif" width="100">|<img src="src/img/banners/cbg-6.gif" width="100">|<img src="src/img/banners/cbg-7.gif" width="100">|<img src="src/img/banners/cbg-8.gif" width="100">|
+|<img src="src/img/banners/cbg-9.gif" width="100">|<img src="src/img/banners/cbg-10.gif" width="100">|<img src="src/img/banners/cbg-11.gif" width="100">|<img src="src/img/banners/cbg-12.gif" width="100">|
+|<img src="src/img/banners/cbg-13.gif" width="100">|<img src="src/img/banners/cbg-14.gif" width="100">|<img src="src/img/banners/cbg-16.gif" width="100">|<img src="src/img/banners/cbg-17.gif" width="100">|
+|<img src="src/img/banners/cbg-18.gif" width="100">|<img src="src/img/banners/bg-1.gif" width="100">|<img src="src/img/banners/bg-2.gif" width="100">|<img src="src/img/banners/bg-3.gif" width="100">|
 
 </div>
 
@@ -112,12 +137,11 @@ a browser startpage for late night coders, students, and anyone who wants their 
 <summary><b>Chrome / Edge</b></summary>
 
 ```bash
-# 1. download from releases
-# 2. extract the zip
-# 3. go to chrome://extensions
-# 4. enable "Developer mode"
-# 5. click "Load unpacked" → select folder
-# 6. open new tab ✨
+# 1. download or clone this repo
+# 2. go to chrome://extensions
+# 3. enable "Developer mode"
+# 4. click "Load unpacked" → select folder
+# 5. open new tab ✨
 ```
 
 </details>
@@ -156,9 +180,15 @@ a browser startpage for late night coders, students, and anyone who wants their 
 
 ### 🎨 make it yours
 
-edit `userconfig.js`:
+Edit `userconfig.js` to customize everything:
 
 ```js
+// your name
+userName: "crydo",
+
+// change the background wallpaper (drop any image in src/img/)
+wallpaper: "src/img/kamehouse.jpg",
+
 // add your quotes
 customQuotes: [
   { text: "stay cozy.", author: "you" }
@@ -167,12 +197,44 @@ customQuotes: [
 // add your links with custom icons
 bookmarks: [
   { name: "GitHub", url: "https://github.com", icon: "brand-github" }
+],
+
+// configure tabs with accent color, banner GIF, and link sections
+tabs: [
+  {
+    name: "chill",
+    accent: "#a9b665",
+    background_url: "src/img/banners/cbg-7.gif",
+    categories: [ ... ]
+  }
 ]
 ```
+
+> **🌅 Custom Wallpaper**  
+> Drop any `.jpg` or `.png` into `src/img/` and update the `wallpaper` key.  
+> The blur, darkening, and pastel overlay are all applied automatically in-app!
 
 > **🎨 Want custom icons?**  
 > Browse **[Tabler Icons](https://tabler-icons.io/)** and use any icon name!  
 > Example: `icon: "brand-spotify"`, `icon: "heart"`, `icon: "coffee"`
+
+<br>
+
+---
+
+### 🎵 ambient sounds
+
+The ambient player supports local files and web streams. To add your own tracks, edit the `sounds` array in `src/components/ambient/ambient.component.js`:
+
+```js
+sounds = [
+  { id: 'rain',   name: 'Rain',             src: 'https://...' },
+  { id: 'sparkle',name: 'Sparkle',          src: 'src/assets/sparkle.mp3' },
+  { id: 'dblofi', name: 'Dragon Ball Lofi', src: 'src/assets/Dragon Ball Lofi.mp3' }
+];
+```
+
+> Drop any `.mp3` into `src/assets/` and add a new entry to the list!
 
 <br>
 
@@ -186,7 +248,7 @@ made with insomnia & good vibes
 
 <br>
 
-*forked from [AllJavi/tartarus-startpage](https://github.com/AllJavi/tartarus-startpage)*
+*forked from [cookedzera/komorebi-startpage](https://github.com/cookedzera/komorebi-startpage)*
 
 <br>
 
