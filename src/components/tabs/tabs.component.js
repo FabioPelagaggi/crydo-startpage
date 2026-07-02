@@ -71,10 +71,10 @@ class Category extends Component {
       const tintRgba = Category.hexToRgba(accentColor, 0.35);
       const dimRgba = 'rgba(0, 0, 0, 0.55)';
 
-      const bgStyle = background_url ? `background-image: linear-gradient(${tintRgba}, ${tintRgba}), linear-gradient(${dimRgba}, ${dimRgba}), url(${background_url}); background-repeat: no-repeat, no-repeat, no-repeat; background-size: cover, cover, contain; background-position: left, left, left; background-blend-mode: overlay, normal, normal;` : '';
+      const bgStyle = background_url ? `background-image: linear-gradient(${tintRgba}, ${tintRgba}), linear-gradient(${dimRgba}, ${dimRgba}), url(${background_url}); background-repeat: no-repeat, no-repeat, no-repeat; background-size: cover, cover, cover; background-position: center, center, center; background-blend-mode: overlay, normal, normal;` : '';
 
-      return `<ul class="${name}" ${index == 0 ? "active" : ""} style="--flavour: ${accentColor}; --container-bg: ${containerBg}; background: linear-gradient(145deg, ${bgStart}, ${bgEnd}); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); ${bgStyle}">
-            <div class="banner"></div>
+      return `<ul class="${name}" ${index == 0 ? "active" : ""} style="--flavour: ${accentColor}; --container-bg: ${containerBg}; background: linear-gradient(145deg, ${bgStart}, ${bgEnd}); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08);">
+            <div class="banner" style="${bgStyle}"></div>
             <div class="links">${Links.getAll(name, tabs)}</div>
           </ul>`;
     }).join("")
@@ -178,6 +178,16 @@ class Tabs extends Component {
           opacity: 1;
           transform: scale(1) translateY(0);
           filter: blur(0);
+      }
+
+      .categories .banner {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 25%;
+          height: 100%;
+          border-radius: 12px 0 0 12px;
+          z-index: 0;
       }
 
       .categories .links {
