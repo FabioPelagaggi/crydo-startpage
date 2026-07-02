@@ -22,7 +22,8 @@ class SettingsPanel extends Component {
             'cbg-6.gif', 'cbg-7.gif', 'cbg-8.gif', 'cbg-9.gif', 'cbg-10.gif',
             'cbg-11.gif', 'cbg-12.gif', 'cbg-13.gif', 'cbg-14.gif', 'cbg-16.gif',
             'cbg-17.gif', 'cbg-18.gif', 'cbg-19.gif', 'cbg-20.gif', 'cbg-21.gif',
-            'cbg-22.gif', 'cbg-23.gif', 'cbg-24.gif', 'cbg-25.gif', 'cbg-26.gif', 'cbg-27.gif'
+            'cbg-22.gif', 'cbg-23.gif', 'cbg-24.gif', 'cbg-25.gif', 'cbg-26.gif', 'cbg-27.gif',
+            'cbg-28.gif', 'cbg-29.gif'
         ];
         this.loadSettings();
     }
