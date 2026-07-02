@@ -63,11 +63,6 @@ class Weather extends Component {
       :host {
           display: flex;
           align-items: center;
-          padding: 6px 10px;
-          background: rgba(255, 255, 255, 0.03);
-          backdrop-filter: blur(4px);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          border-radius: 6px;
           pointer-events: none;
           user-select: none;
       }
@@ -92,6 +87,7 @@ class Weather extends Component {
           justify-content: center;
           height: 100%;
           opacity: 0.9;
+          margin: 0;
       }
 
 

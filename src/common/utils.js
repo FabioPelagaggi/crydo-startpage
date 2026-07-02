@@ -35,11 +35,6 @@ const throttle = (func, limit = 100) => {
   };
 };
 
-const CRYPTO_CONFIG = {
-  ids: {
-    btc: '90',
-    eth: '80'
-  },
-  apiUrl: 'https://api.coinlore.net/api/ticker/',
-  refreshInterval: 5 * 60 * 1000
+const CURRENCY_CONFIG = {
+  refreshInterval: 10 * 60 * 1000
 };

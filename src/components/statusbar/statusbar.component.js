@@ -106,23 +106,18 @@ class Statusbar extends Component {
           align-items: center;
       }
 
-      .widget {
-          position: relative;
-          height: 100%;
-          padding: 0 1em;
+      .widgets {
           display: flex;
           align-items: center;
+          gap: 28px;
+          height: 100%;
+          padding: 0 16px;
       }
 
-      .widget:first-child { padding-left: 2em; }
-      .widget:last-child { padding-right: 2em; }
-      .widget:not(:first-child)::before {
-          content: '';
-          position: absolute;
-          left: 0;
-          height: calc(100% - 15px);
-          width: 1px;
-          background: rgba(255, 255, 255, 0.1);
+      .widget {
+          position: relative;
+          display: flex;
+          align-items: center;
       }
 
       .progress-container {
@@ -190,7 +185,8 @@ class Statusbar extends Component {
 
     template() {
         const userSettings = JSON.parse(localStorage.getItem('userSettings') || '{}');
-        const widgets = userSettings.widgets || { crypto: true, weather: true, ambient: true, search: true };
+        const widgets = userSettings.widgets || { currency: true, weather: true, ambient: true, search: true };
+        if (widgets.currency === undefined) widgets.currency = true; // Migrate legacy crypto setting
         return `
         <div id="tabs">
             <cols>
@@ -204,7 +200,7 @@ class Statusbar extends Component {
                 </div>
 
                 <div class="+ widgets col-end">
-                    ${widgets.crypto ? '<crypto-widget class="+ widget"></crypto-widget>' : ''}
+                    ${widgets.currency ? '<currency-widget class="+ widget"></currency-widget>' : ''}
                     <current-time class="+ widget"></current-time>
                     ${widgets.weather ? '<weather-forecast class="+ widget weather"></weather-forecast>' : ''}
                 </div>

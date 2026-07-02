@@ -1,6 +1,7 @@
 class Config {
   defaults = {
     overrideStorage: false,
+    baseCurrency: 'BRL',
     temperature: {
       location: 'New York',
       scale: 'C'

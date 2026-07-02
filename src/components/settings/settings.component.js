@@ -29,8 +29,8 @@ class SettingsPanel extends Component {
         const defaults = {
             widgets: {
                 quote: true,
-                crypto: true,
                 weather: true,
+                currency: true,
                 ambient: true,
                 search: true,
                 clock24h: false,
@@ -38,6 +38,7 @@ class SettingsPanel extends Component {
 
             userName: CONFIG.userName || 'User',
             weatherCity: CONFIG.temperature?.location || 'India',
+            baseCurrency: 'BRL',
         };
 
         if (saved) {
@@ -47,6 +48,13 @@ class SettingsPanel extends Component {
                 ...parsed,
                 widgets: { ...defaults.widgets, ...(parsed.widgets || {}) }
             };
+
+            // Migrate legacy crypto setting
+            if (this.userSettings.widgets.currency === undefined && parsed.widgets && parsed.widgets.crypto !== undefined) {
+                this.userSettings.widgets.currency = parsed.widgets.crypto;
+            } else if (this.userSettings.widgets.currency === undefined) {
+                this.userSettings.widgets.currency = true;
+            }
         } else {
             this.userSettings = defaults;
         }
@@ -565,8 +573,16 @@ class SettingsPanel extends Component {
                                     <div class="toggle ${this.userSettings.widgets.weather ? 'on' : ''}" data-widget="weather"></div>
                                 </div>
                                 <div class="toggle-row">
-                                    <span class="toggle-label">Crypto Prices</span>
-                                    <div class="toggle ${this.userSettings.widgets.crypto ? 'on' : ''}" data-widget="crypto"></div>
+                                    <span class="toggle-label">Currency Rates</span>
+                                    <div class="toggle ${this.userSettings.widgets.currency ? 'on' : ''}" data-widget="currency"></div>
+                                </div>
+                                <div class="input-group">
+                                    <select id="base-currency" name="base-currency" style="width:100%; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); color:#fff; padding:8px; border-radius:6px; font-family:'Roboto'; margin-top:-10px; margin-bottom:15px; outline:none;">
+                                        <option value="BRL" ${this.userSettings.baseCurrency === 'BRL' ? 'selected' : ''}>BRL Base (Show USD, CAD, EUR)</option>
+                                        <option value="USD" ${this.userSettings.baseCurrency === 'USD' ? 'selected' : ''}>USD Base (Show CAD, EUR, BRL)</option>
+                                        <option value="EUR" ${this.userSettings.baseCurrency === 'EUR' ? 'selected' : ''}>EUR Base (Show USD, CAD, BRL)</option>
+                                        <option value="CAD" ${this.userSettings.baseCurrency === 'CAD' ? 'selected' : ''}>CAD Base (Show USD, EUR, BRL)</option>
+                                    </select>
                                 </div>
                                 <div class="toggle-row">
                                     <span class="toggle-label">Ambient Player</span>
@@ -783,6 +799,7 @@ class SettingsPanel extends Component {
                     let results = [];
                     const readEntries = () => {
                         reader.readEntries(entries => {
+
                             if (entries.length === 0) {
                                 resolve(results.filter(e => e.isFile).map(e => e.name));
                             } else {
@@ -990,6 +1007,15 @@ class SettingsPanel extends Component {
                 this.deleteSearchShortcut(key);
             }
         });
+
+        const baseCurrencySelect = this.shadow.getElementById('base-currency');
+        if (baseCurrencySelect) {
+            baseCurrencySelect.addEventListener('change', (e) => {
+                this.userSettings.baseCurrency = e.target.value;
+                this.saveSettings();
+                window.location.reload();
+            });
+        }
 
         // GIF Selector Logic - Modal Based
         const gifModal = shadow.getElementById('gif-modal');

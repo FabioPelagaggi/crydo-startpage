@@ -10,7 +10,7 @@ class Storage {
   }
 
   save(value) {
-    localStorage[this.key] = value;
+    localStorage[this.key] = stringify(value);
   }
 
   hasValue(value) {

@@ -2,12 +2,13 @@ let saved_config = JSON.parse(localStorage.getItem("CONFIG"));
 
 const default_config = {
   overrideStorage: true,
+  baseCurrency: "BRL",
   temperature: {
     location: 'Rio de Janeiro,BR',
     scale: "C",
   },
   clock: {
-    format: "h:i p",
+    format: "I:i p", // This is overridden by the visual settings UI (24-hour vs 12-hour toggle)
     iconColor: "#f4a261",
   },
   search: {
