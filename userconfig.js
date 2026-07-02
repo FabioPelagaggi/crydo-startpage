@@ -200,12 +200,6 @@ const default_config = {
               icon: "package",
               icon_color: "#89b482", // Sage green
             },
-            {
-              name: "amazon games",
-              url: "https://gaming.amazon.com/home",
-              icon: "brand-amazon",
-              icon_color: "#d8a657", // Warm gold
-            },
           ],
         },
         {
@@ -223,6 +217,12 @@ const default_config = {
               icon: "discount-2",
               icon_color: "#b4a4c9", // Soft lavender
             },
+            {
+              name: "amazon games",
+              url: "https://gaming.amazon.com/home",
+              icon: "brand-amazon",
+              icon_color: "#d8a657", // Warm gold
+            }
           ],
         },
         {
