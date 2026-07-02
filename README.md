@@ -67,6 +67,17 @@ A personalized browser startpage for late night coders, students, and anyone who
 
 ---
 
+### 🛠️ tech stack
+
+- **HTML5 & CSS3**: Modern styling with CSS variables, Flexbox, and Grid for a fully responsive layout.
+- **Vanilla JavaScript (ES6)**: Pure JS with absolutely zero bloat or heavy frameworks.
+- **Web Components**: Encapsulated UI components using the Shadow DOM for modularity and styling isolation.
+- **LocalStorage API**: Persistent client-side storage for all your settings, widget configurations, and state memory.
+
+<br>
+
+---
+
 ### 📸 gallery
 
 <div align="center">
