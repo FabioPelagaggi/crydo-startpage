@@ -123,9 +123,8 @@ This startpage is organized into **4 tabs**, each with its own color accent, ban
 |<img src="src/img/banners/cbg-1.gif" width="100">|<img src="src/img/banners/cbg-2.gif" width="100">|<img src="src/img/banners/cbg-3.gif" width="100">|<img src="src/img/banners/cbg-4.gif" width="100">|
 |<img src="src/img/banners/cbg-5.gif" width="100">|<img src="src/img/banners/cbg-6.gif" width="100">|<img src="src/img/banners/cbg-7.gif" width="100">|<img src="src/img/banners/cbg-8.gif" width="100">|
 |<img src="src/img/banners/cbg-9.gif" width="100">|<img src="src/img/banners/cbg-10.gif" width="100">|<img src="src/img/banners/cbg-11.gif" width="100">|<img src="src/img/banners/cbg-12.gif" width="100">|
-|<img src="src/img/banners/cbg-13.gif" width="100">|<img src="src/img/banners/cbg-14.gif" width="100">|<img src="src/img/banners/cbg-15.gif" width="100">|<img src="src/img/banners/cbg-16.gif" width="100">|
-|<img src="src/img/banners/cbg-17.gif" width="100">|<img src="src/img/banners/cbg-18.gif" width="100">|<img src="src/img/banners/bg-1.gif" width="100">|<img src="src/img/banners/bg-2.gif" width="100">|
-|<img src="src/img/banners/bg-3.gif" width="100">|<img src="src/img/banners/dbz01.gif" width="100">|||
+|<img src="src/img/banners/cbg-13.gif" width="100">|<img src="src/img/banners/cbg-14.gif" width="100">|<img src="src/img/banners/cbg-16.gif" width="100">|<img src="src/img/banners/cbg-17.gif" width="100">|
+|<img src="src/img/banners/cbg-18.gif" width="100">|<img src="src/img/banners/bg-1.gif" width="100">|<img src="src/img/banners/bg-2.gif" width="100">|<img src="src/img/banners/bg-3.gif" width="100">|
 
 </div>
 
