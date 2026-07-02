@@ -184,6 +184,34 @@ This startpage is organized into **4 tabs**, each with its own color accent, ban
 
 Edit `userconfig.js` or use the **In-App Settings Menu** (click the gear icon bottom-right) to customize your startpage.
 
+```js
+// your name
+userName: "crydo",
+
+// change the background wallpaper (drop any image in src/img/backgrounds/)
+wallpaper: "src/img/backgrounds/kamehouse.jpg",
+
+// add your quotes
+customQuotes: [
+  { text: "stay cozy.", author: "you" }
+],
+
+// add your links with custom icons
+bookmarks: [
+  { name: "GitHub", url: "https://github.com", icon: "brand-github" }
+],
+
+// configure tabs with accent color, banner GIF, and link sections
+tabs: [
+  {
+    name: "chill",
+    accent: "#a9b665",
+    background_url: "src/img/banners/cbg-7.gif",
+    categories: [ ... ]
+  }
+]
+```
+
 ### ✨ Visual Customization
 The built-in settings UI lets you:
 - Change your name
