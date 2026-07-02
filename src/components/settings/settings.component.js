@@ -9,6 +9,12 @@ class SettingsPanel extends Component {
 
     constructor() {
         super();
+        this.wallpapers = [
+            'background.png',
+            'kamehouse.jpg',
+            'shenron.jpg'
+        ];
+
         this.backgrounds = [
             'bg-1.gif', 'bg-2.gif', 'bg-3.gif',
             'cbg-1.gif', 'cbg-2.gif', 'cbg-3.gif', 'cbg-4.gif', 'cbg-5.gif',
@@ -532,6 +538,7 @@ class SettingsPanel extends Component {
                             <button class="sidebar-btn" data-section="appearance">Appearance</button>
                             <button class="sidebar-btn" data-section="links">Links</button>
                             <button class="sidebar-btn" data-section="search">Search</button>
+                            <button class="sidebar-btn" data-section="music">Music 🎵</button>
                         </div>
 
                         <div class="content-area">
@@ -568,6 +575,21 @@ class SettingsPanel extends Component {
 
                             <div class="view-section" id="view-appearance">
 
+                                <div class="section-title">Wallpaper</div>
+                                <div style="color:rgba(255,255,255,0.4); font-size:11px; margin-bottom:10px; font-family:'Roboto'">
+                                    Place your image in this folder, then select it below (you must name it matching an existing background):
+                                </div>
+                                <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+                                    <input type="text" readonly value="src/img/backgrounds/" class="copyable-path" style="flex:1; background:rgba(0,0,0,0.2); border:1px solid rgba(169,182,101,0.2); color:#a9b665; font-size:11px; padding:6px 10px; border-radius:4px; cursor:pointer;" title="Click to copy path">
+                                </div>
+                                <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+                                    <div id="wallpaper-preview-btn" style="width:120px; height:70px; border-radius:6px; background-image:url('${localStorage.getItem('customWallpaper') || (typeof default_config !== 'undefined' && default_config.wallpaper) || 'src/img/backgrounds/kamehouse.jpg'}'); background-size:cover; background-position:center; cursor:pointer; border:2px solid rgba(255,255,255,0.1); transition:all 0.2s; position:relative; overflow:hidden;" title="Change background">
+                                        <div style="position:absolute; inset:0; background:rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.2s;" class="gif-hover-overlay">
+                                            <i class="material-icons" style="font-size:20px; color:#fff">edit</i>
+                                        </div>
+                                    </div>
+                                    <button id="reset-wallpaper" style="background:none; border:1px solid rgba(231,111,81,0.3); color:#e76f51; border-radius:6px; padding:6px 12px; font:500 11px 'Roboto'; cursor:pointer; transition:all 0.2s;">Reset to Default</button>
+                                </div>
 
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px">
                                     <div class="section-title" style="margin:0">Tab Customization</div>
@@ -613,13 +635,15 @@ class SettingsPanel extends Component {
                                 <div id="gif-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);">
                                     <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:linear-gradient(145deg, rgba(42,43,38,0.98), rgba(35,36,32,0.98)); border-radius:12px; padding:20px; width:90%; max-width:480px; border:1px solid rgba(169,182,101,0.2); box-shadow:0 25px 50px rgba(0,0,0,0.5);">
                                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                                            <div style="font-size:13px; color:#a9b665; text-transform:uppercase; letter-spacing:2px; font-weight:600;">Select Background</div>
+                                            <div id="gif-modal-title" style="font-size:13px; color:#a9b665; text-transform:uppercase; letter-spacing:2px; font-weight:600;">Select Background</div>
                                             <button id="gif-modal-close" style="background:none; border:none; color:rgba(255,255,255,0.5); cursor:pointer; font-size:20px; line-height:1;">&times;</button>
                                         </div>
                                         <div id="gif-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; max-height:280px; overflow-y:auto; padding-right:4px;">
                                         </div>
                                     </div>
                                 </div>
+
+
                                 
                                 <div id="selected-color-display" style="margin-top:16px; padding:10px; background:rgba(255,255,255,0.03); border-radius:6px; display:none;">
                                     <span style="font-size:11px; color:rgba(255,255,255,0.5)">Selected: </span>
@@ -707,6 +731,23 @@ class SettingsPanel extends Component {
                                 </div>
                             </div>
 
+                            <div class="view-section" id="view-music">
+                                <div class="section-title">Ambient Music</div>
+                                <div style="color:rgba(255,255,255,0.4); font-size:11px; margin-bottom:15px; font-family:'Roboto'">
+                                    Manage songs for the ambient player.
+                                </div>
+                                
+                                <div class="add-link-form">
+                                    <div class="section-title" style="margin-bottom:10px">Custom Ambient Music</div>
+                                    <div style="color:rgba(255,255,255,0.4); font-size:11px; margin-bottom:10px; font-family:'Roboto'">
+                                        To add your own music, place any <code>.mp3</code> files in the folder below. The application will automatically scan the folder and they will dynamically appear in the ambient music player menu in the bottom-left corner!
+                                    </div>
+                                    <div class="add-link-row" style="margin-bottom:0px;">
+                                        <input type="text" readonly value="src/assets/" class="copyable-path" style="flex:1; background:rgba(0,0,0,0.2); border:1px solid rgba(169,182,101,0.2); color:#a9b665; font-size:11px; padding:6px 10px; border-radius:4px; cursor:pointer;" title="Click to copy path">
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -715,14 +756,50 @@ class SettingsPanel extends Component {
     }
 
     connectedCallback() {
-        this.render().then(() => {
-            this.setEvents();
-            this.renderLinks(this.activeLinkTab);
-            this.renderSearchShortcuts();
+        this.scanDirectories().then(() => {
+            this.render().then(() => {
+                this.setEvents();
+                this.renderLinks(this.activeLinkTab);
+                this.renderSearchShortcuts();
+            });
         });
 
         // Listen for open event
         document.addEventListener('openSettings', () => this.open());
+    }
+
+    async scanDirectories() {
+        if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.getPackageDirectoryEntry) return;
+        
+        const scan = (path) => new Promise(resolve => {
+            chrome.runtime.getPackageDirectoryEntry(root => {
+                root.getDirectory(path, {create: false}, dir => {
+                    let reader = dir.createReader();
+                    let results = [];
+                    const readEntries = () => {
+                        reader.readEntries(entries => {
+                            if (entries.length === 0) {
+                                resolve(results.filter(e => e.isFile).map(e => e.name));
+                            } else {
+                                results = results.concat(entries);
+                                readEntries();
+                            }
+                        });
+                    };
+                    readEntries();
+                }, () => resolve([]));
+            });
+        });
+
+        try {
+            const wps = await scan('src/img/backgrounds');
+            if (wps.length > 0) this.wallpapers = wps;
+
+            const bgs = await scan('src/img/banners');
+            if (bgs.length > 0) this.backgrounds = bgs;
+        } catch (e) {
+            console.warn('Could not scan directories', e);
+        }
     }
 
     setEvents() {
@@ -924,28 +1001,32 @@ class SettingsPanel extends Component {
             btn.addEventListener('click', () => {
                 const tabIdx = parseInt(btn.dataset.tab);
                 gifModal.dataset.activeTab = tabIdx;
+                const isWallpaper = gifModal.dataset.activeTab === 'wallpaper';
+                shadow.getElementById('gif-modal-title').textContent = isWallpaper ? 'Select Wallpaper' : 'Select Banner';
+                
+                // Always re-render the grid to handle switching between banners and wallpapers
+                const getUrl = (path) => {
+                    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getURL) {
+                        return chrome.runtime.getURL(path);
+                    }
+                    return path;
+                };
 
-                // Lazy-load GIF grid only when modal opens
-                if (gifGrid.children.length === 0) {
-                    const getUrl = (path) => {
-                        if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getURL) {
-                            return chrome.runtime.getURL(path);
-                        }
-                        return path;
-                    };
+                const itemsList = isWallpaper ? this.wallpapers : this.backgrounds;
+                const folderPath = isWallpaper ? 'src/img/backgrounds/' : 'src/img/banners/';
 
-                    gifGrid.innerHTML = this.backgrounds.map(bg => {
-                        const bgPath = `src/img/banners/${bg}`;
-                        const bgUrl = getUrl(bgPath);
-                        return `<div class="gif-option" data-bg="${bgPath}" style="aspect-ratio:16/9; background-image:url('${bgUrl}'); background-size:cover; background-position:center; border-radius:6px; cursor:pointer; border:2px solid transparent; opacity:0.7; transition:all 0.2s ease;" title="${bg}"></div>`;
-                    }).join('');
-                    this.attachGifOptionEvents(shadow, gifGrid, gifModal);
-                }
-
+                gifGrid.innerHTML = itemsList.map(bg => {
+                    const bgPath = folderPath + bg;
+                    const bgUrl = getUrl(bgPath);
+                    return `<div class="gif-option" data-bg="${bgPath}" style="aspect-ratio:16/9; background-image:url('${bgUrl}'); background-size:cover; background-position:center; border-radius:6px; cursor:pointer; border:2px solid transparent; opacity:0.7; transition:all 0.2s ease;" title="${bg}"></div>`;
+                }).join('');
+                this.attachGifOptionEvents(shadow, gifGrid, gifModal);
+                
                 gifModal.style.display = 'block';
-
+                
                 // Highlight current selection
-                const currentBg = CONFIG.tabs[tabIdx].background_url || '';
+                const tabIdxVal = parseInt(gifModal.dataset.activeTab);
+                const currentBg = CONFIG.tabs[tabIdxVal]?.background_url || '';
                 gifGrid.querySelectorAll('.gif-option').forEach(opt => {
                     if (currentBg.includes(opt.dataset.bg.split('/').pop())) {
                         opt.style.borderColor = '#a9b665';
@@ -966,6 +1047,86 @@ class SettingsPanel extends Component {
             if (e.target === gifModal) gifModal.style.display = 'none';
         });
 
+        // ===== Path Copy Event =====
+        shadow.querySelectorAll('.copyable-path').forEach(input => {
+            input.addEventListener('click', (e) => {
+                e.target.select();
+                navigator.clipboard.writeText(e.target.value).then(() => {
+                    Actions.showToast('Path copied to clipboard!');
+                }).catch(err => {
+                    document.execCommand('copy');
+                    Actions.showToast('Path copied to clipboard!');
+                });
+            });
+        });
+
+        const wallpaperPreviewBtn = shadow.getElementById('wallpaper-preview-btn');
+        if (wallpaperPreviewBtn) {
+            wallpaperPreviewBtn.addEventListener('mouseenter', () => {
+                wallpaperPreviewBtn.querySelector('.gif-hover-overlay').style.opacity = '1';
+            });
+            wallpaperPreviewBtn.addEventListener('mouseleave', () => {
+                wallpaperPreviewBtn.querySelector('.gif-hover-overlay').style.opacity = '0';
+            });
+            wallpaperPreviewBtn.addEventListener('click', () => {
+                gifModal.dataset.activeTab = 'wallpaper';
+                
+                const isWallpaper = true;
+                shadow.getElementById('gif-modal-title').textContent = 'Select Wallpaper';
+                
+                const getUrl = (path) => {
+                    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getURL) {
+                        return chrome.runtime.getURL(path);
+                    }
+                    return path;
+                };
+
+                gifGrid.innerHTML = this.wallpapers.map(bg => {
+                    const bgPath = `src/img/backgrounds/${bg}`;
+                    const bgUrl = getUrl(bgPath);
+                    return `<div class="gif-option" data-bg="${bgPath}" style="aspect-ratio:16/9; background-image:url('${bgUrl}'); background-size:cover; background-position:center; border-radius:6px; cursor:pointer; border:2px solid transparent; opacity:0.7; transition:all 0.2s ease;" title="${bg}"></div>`;
+                }).join('');
+                this.attachGifOptionEvents(shadow, gifGrid, gifModal);
+                
+                gifModal.style.display = 'block';
+                
+                const currentBg = localStorage.getItem('customWallpaper') || (typeof default_config !== 'undefined' && default_config.wallpaper) || '';
+                gifGrid.querySelectorAll('.gif-option').forEach(opt => {
+                    if (currentBg.includes(opt.dataset.bg.split('/').pop())) {
+                        opt.style.borderColor = '#a9b665';
+                        opt.style.opacity = '1';
+                    } else {
+                        opt.style.borderColor = 'transparent';
+                        opt.style.opacity = '0.7';
+                    }
+                });
+            });
+        }
+
+        const resetWallpaper = shadow.getElementById('reset-wallpaper');
+        if (resetWallpaper) {
+            resetWallpaper.addEventListener('click', () => {
+                localStorage.removeItem('customWallpaper');
+                let styleEl = document.getElementById('custom-wallpaper-style');
+                if (styleEl) styleEl.remove();
+                if (typeof default_config !== 'undefined' && default_config.wallpaper) {
+                    let defStyle = document.createElement('style');
+                    defStyle.id = 'custom-wallpaper-style';
+                    defStyle.textContent = 'body::before { background-image: url(' + default_config.wallpaper + ') !important; }';
+                    document.head.appendChild(defStyle);
+                    const previewBtn = shadow.getElementById('wallpaper-preview-btn');
+                    if (previewBtn) previewBtn.style.backgroundImage = `url('${default_config.wallpaper}')`;
+                } else {
+                    const previewBtn = shadow.getElementById('wallpaper-preview-btn');
+                    if (previewBtn) previewBtn.style.backgroundImage = `url('src/img/backgrounds/kamehouse.jpg')`;
+                }
+                Actions.showToast('Wallpaper reset to default');
+            });
+        }
+
+        // ===== Music events =====
+
+
     }
 
     attachGifOptionEvents(shadow, gifGrid, gifModal) {
@@ -975,24 +1136,45 @@ class SettingsPanel extends Component {
                 opt.style.transform = 'scale(1.05)';
             });
             opt.addEventListener('mouseleave', () => {
-                const activeTab = parseInt(gifModal.dataset.activeTab || '0');
-                const currentBg = CONFIG.tabs[activeTab]?.background_url || '';
-                if (!currentBg.includes(opt.dataset.bg.split('/').pop())) {
-                    opt.style.opacity = '0.7';
+                const activeTabStr = gifModal.dataset.activeTab || '0';
+                if (activeTabStr === 'wallpaper') {
+                    const currentBg = localStorage.getItem('customWallpaper') || (typeof default_config !== 'undefined' && default_config.wallpaper) || '';
+                    if (!currentBg.includes(opt.dataset.bg.split('/').pop())) {
+                        opt.style.opacity = '0.7';
+                    }
+                } else {
+                    const activeTab = parseInt(activeTabStr);
+                    const currentBg = CONFIG.tabs[activeTab]?.background_url || '';
+                    if (!currentBg.includes(opt.dataset.bg.split('/').pop())) {
+                        opt.style.opacity = '0.7';
+                    }
                 }
                 opt.style.transform = 'scale(1)';
             });
             opt.addEventListener('click', () => {
                 const bgUrl = opt.dataset.bg;
-                const activeTab = parseInt(gifModal.dataset.activeTab || '0');
+                const activeTabStr = gifModal.dataset.activeTab || '0';
 
-                // Update config
-                CONFIG.tabs[activeTab].background_url = bgUrl;
-                localStorage.setItem('savedTabs', JSON.stringify(CONFIG.tabs));
-
-                // Update preview button
-                const previewBtn = shadow.querySelector(`.gif-preview-btn[data-tab="${activeTab}"]`);
-                if (previewBtn) previewBtn.style.backgroundImage = `url('${bgUrl}')`;
+                if (activeTabStr === 'wallpaper') {
+                    localStorage.setItem('customWallpaper', bgUrl);
+                    let styleEl = document.getElementById('custom-wallpaper-style');
+                    if (!styleEl) {
+                        styleEl = document.createElement('style');
+                        styleEl.id = 'custom-wallpaper-style';
+                        document.head.appendChild(styleEl);
+                    }
+                    styleEl.textContent = 'body::before { background-image: url(' + bgUrl + ') !important; }';
+                    
+                    const previewBtn = shadow.getElementById('wallpaper-preview-btn');
+                    if (previewBtn) previewBtn.style.backgroundImage = `url('${bgUrl}')`;
+                } else {
+                    const activeTab = parseInt(activeTabStr);
+                    CONFIG.tabs[activeTab].background_url = bgUrl;
+                    localStorage.setItem('savedTabs', JSON.stringify(CONFIG.tabs));
+                    
+                    const previewBtn = shadow.querySelector(`.gif-preview-btn[data-tab="${activeTab}"]`);
+                    if (previewBtn) previewBtn.style.backgroundImage = `url('${bgUrl}')`;
+                }
 
                 // Visual feedback in grid
                 gifGrid.querySelectorAll('.gif-option').forEach(o => {
@@ -1266,6 +1448,7 @@ class SettingsPanel extends Component {
         document.body.style.overflow = '';
         document.dispatchEvent(new CustomEvent('settingsClosed'));
     }
+
 }
 
 customElements.define('settings-panel', SettingsPanel);

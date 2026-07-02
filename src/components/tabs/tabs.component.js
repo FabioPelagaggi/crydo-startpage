@@ -312,6 +312,44 @@ class Tabs extends Component {
               opacity: 1;
            }
       }
+
+      .settings-gear {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: rgba(42, 43, 38, 0.7);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(169, 182, 101, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 999;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .settings-gear:hover {
+          transform: rotate(90deg) scale(1.1);
+          border-color: rgba(169, 182, 101, 0.5);
+          box-shadow: 0 4px 20px rgba(169, 182, 101, 0.2);
+          background: rgba(42, 43, 38, 0.9);
+      }
+
+      .settings-gear svg {
+          width: 20px;
+          height: 20px;
+          color: rgba(169, 182, 101, 0.7);
+          transition: color 0.3s ease;
+      }
+
+      .settings-gear:hover svg {
+          color: #a9b665;
+      }
     `;
   }
 
@@ -336,10 +374,23 @@ class Tabs extends Component {
       </div>
       <settings-panel></settings-panel>
       <command-palette></command-palette>
+      <div class="settings-gear" id="settings-gear" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </div>
     `;
   }
 
   connectedCallback() {
-    this.render();
+    this.render().then(() => {
+      const gear = this.shadow.getElementById('settings-gear');
+      if (gear) {
+        gear.addEventListener('click', () => {
+          document.dispatchEvent(new CustomEvent('openSettings'));
+        });
+      }
+    });
   }
 }

@@ -28,7 +28,7 @@ const default_config = {
   fastlink: "https://chat.openai.com/",
   openLastVisitedTab: true,
   userName: "crydo",
-  wallpaper: "src/img/kamehouse.jpg",
+  wallpaper: "src/img/backgrounds/kamehouse.jpg",
 
   customQuotes: [
   ],
@@ -490,11 +490,13 @@ if (savedSearchEngines) {
   }
 })();
 
-// Apply wallpaper from config
+// Apply wallpaper from config (localStorage override takes priority)
 (function() {
-  if (default_config.wallpaper) {
+  var wallpaper = localStorage.getItem('customWallpaper') || default_config.wallpaper;
+  if (wallpaper) {
     var style = document.createElement('style');
-    style.textContent = 'body::before { background-image: url(' + default_config.wallpaper + ') !important; }';
+    style.id = 'custom-wallpaper-style';
+    style.textContent = 'body::before { background-image: url(' + wallpaper + ') !important; }';
     document.head.appendChild(style);
   }
 })();

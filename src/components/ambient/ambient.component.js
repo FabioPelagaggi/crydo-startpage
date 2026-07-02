@@ -15,6 +15,65 @@ class AmbientPlayer extends Component {
 
     constructor() {
         super();
+        this.loadCustomSongs();
+    }
+
+    loadCustomSongs() {
+        const customSongs = JSON.parse(localStorage.getItem('customSongs') || '[]');
+        const customSounds = customSongs.map(song => ({
+            id: song.id,
+            name: song.name,
+            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`,
+            src: song.src
+        }));
+
+        const baseSounds = [
+            { id: 'rain', name: 'Rain', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 2v4M8 2v4M12 2v4M20 10l-2 4M16 10l-2 4M12 10l-2 4M8 10l-2 4M4 10l-2 4"/></svg>`, src: 'https://cdn.pixabay.com/audio/2022/05/13/audio_257112ce99.mp3' },
+            { id: 'sparkle', name: 'Sparkle', icon: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14 9L23 11L14 13L12 22L10 13L1 11L10 9L12 0Z"/></svg>`, src: 'src/assets/sparkle.mp3' },
+            { id: 'dblofi', name: 'Dragon Ball Lofi', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13M9 9l12-2M5 21a3 3 0 100-6 3 3 0 000 6zM17 19a3 3 0 100-6 3 3 0 000 6z"/></svg>`, src: 'src/assets/Dragon Ball Lofi.mp3' }
+        ];
+
+        this.sounds = [...baseSounds, ...customSounds];
+        
+        // Asynchronously scan src/assets for .mp3 files
+        if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getPackageDirectoryEntry) {
+            chrome.runtime.getPackageDirectoryEntry(root => {
+                root.getDirectory('src/assets', {create: false}, dir => {
+                    let reader = dir.createReader();
+                    let results = [];
+                    const readEntries = () => {
+                        reader.readEntries(entries => {
+                            if (entries.length === 0) {
+                                const files = results.filter(e => e.isFile && e.name.toLowerCase().endsWith('.mp3')).map(e => e.name);
+                                const newSounds = [];
+                                files.forEach(file => {
+                                    // check if it's already in baseSounds or customSounds by src
+                                    const srcPath = 'src/assets/' + file;
+                                    if (!this.sounds.some(s => s.src === srcPath)) {
+                                        const name = file.replace('.mp3', '');
+                                        const id = 'custom-' + name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+                                        newSounds.push({
+                                            id,
+                                            name,
+                                            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`,
+                                            src: srcPath
+                                        });
+                                    }
+                                });
+                                if (newSounds.length > 0) {
+                                    this.sounds = [...this.sounds, ...newSounds];
+                                    this.rebuildMenu();
+                                }
+                            } else {
+                                results = results.concat(entries);
+                                readEntries();
+                            }
+                        });
+                    };
+                    readEntries();
+                }, () => {});
+            });
+        }
     }
 
     imports() {
@@ -746,6 +805,32 @@ class AmbientPlayer extends Component {
                 this.startEffects(this.currentSound);
             }
         });
+
+        document.addEventListener('customSongsChanged', () => {
+            this.loadCustomSongs();
+            this.rebuildMenu();
+        });
+    }
+
+    rebuildMenu() {
+        const menu = this.shadow.getElementById('sound-menu');
+        if (!menu) return;
+
+        menu.innerHTML = `
+            ${this.sounds.map(s => `
+                <button class="sound-opt" data-sound="${s.id}">
+                    ${s.icon}
+                    <span>${s.name}</span>
+                </button>
+            `).join('')}
+            <button class="sound-opt stop-btn" data-sound="stop">
+                <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+                <span>Stop</span>
+            </button>
+        `;
+        
+        // Re-apply active state
+        this.updateUI();
     }
 
     connectedCallback() {
