@@ -390,7 +390,20 @@ class AmbientPlayer extends Component {
 
     initAudio() {
         this.currentAudio = this.shadow.getElementById('ambient-audio');
-        if (this.currentAudio) this.currentAudio.volume = 0.5;
+        if (this.currentAudio) {
+            this.currentAudio.volume = 0.5;
+            this.currentAudio.addEventListener('timeupdate', () => {
+                if (this.currentAudio.duration && !isNaN(this.currentAudio.duration)) {
+                    localStorage.setItem('ambientTime', this.currentAudio.currentTime);
+                    document.dispatchEvent(new CustomEvent('ambient-timeupdate', {
+                        detail: {
+                            currentTime: this.currentAudio.currentTime,
+                            duration: this.currentAudio.duration
+                        }
+                    }));
+                }
+            });
+        }
         this.effectsContainer = this.shadow.getElementById('effects-layer');
     }
 
@@ -415,11 +428,15 @@ class AmbientPlayer extends Component {
             this.currentAudio.pause();
             this.currentAudio.src = sound.src;
             this.currentAudio.volume = 0.5;
+            this.currentAudio.currentTime = 0;
+            localStorage.setItem('ambientTime', 0);
             this.currentAudio.play().catch(() => { });
 
             this.currentSound = soundId;
             this.updateUI();
             this.startEffects(soundId);
+
+            document.dispatchEvent(new CustomEvent('ambient-play'));
 
             // Save to localStorage for persistence
             localStorage.setItem('ambientSound', soundId);
@@ -457,6 +474,8 @@ class AmbientPlayer extends Component {
                     // Start new audio with fade in
                     this.currentAudio.src = newSrc;
                     this.currentAudio.volume = 0;
+                    this.currentAudio.currentTime = 0;
+                    localStorage.setItem('ambientTime', 0);
                     this.currentAudio.play().catch(() => { });
 
                     // Fade in audio
@@ -497,9 +516,12 @@ class AmbientPlayer extends Component {
         fadeAudio();
         this.currentSound = null;
         this.updateUI();
+        
+        document.dispatchEvent(new CustomEvent('ambient-stop'));
 
         // Clear from localStorage so it won't auto-resume
         localStorage.removeItem('ambientSound');
+        localStorage.removeItem('ambientTime');
 
         // Use graceful fadeout for rain, instant for others
         if (wasRain) {
@@ -797,6 +819,24 @@ class AmbientPlayer extends Component {
                 this.animationFrameId = null;
             }
         });
+        
+        document.addEventListener('ambient-seek', (e) => {
+            if (this.currentAudio && this.currentAudio.duration) {
+                this.currentAudio.currentTime = e.detail.percentage * this.currentAudio.duration;
+            }
+        });
+
+        document.addEventListener('ambient-toggle-pause', () => {
+            if (!this.currentAudio) return;
+            if (this.currentAudio.paused) {
+                this.currentAudio.play().then(() => {
+                    document.dispatchEvent(new CustomEvent('ambient-play'));
+                }).catch(() => {});
+            } else {
+                this.currentAudio.pause();
+                document.dispatchEvent(new CustomEvent('ambient-pause'));
+            }
+        });
 
         document.addEventListener('settingsClosed', () => {
             this.isPaused = false;
@@ -853,8 +893,15 @@ class AmbientPlayer extends Component {
                     if (sound && this.currentAudio) {
                         this.currentAudio.src = sound.src;
                         this.currentAudio.volume = 0.5;
+                        
+                        const savedTime = localStorage.getItem('ambientTime');
+                        if (savedTime && !isNaN(parseFloat(savedTime))) {
+                            this.currentAudio.currentTime = parseFloat(savedTime);
+                        }
 
-                        this.currentAudio.play().catch(() => {
+                        this.currentAudio.play().then(() => {
+                            document.dispatchEvent(new CustomEvent('ambient-play'));
+                        }).catch(() => {
                             // Audio blocked - wait for user interaction
                             this.pendingAudioPlay = true;
 
@@ -865,7 +912,9 @@ class AmbientPlayer extends Component {
                             // Resume audio on first user interaction
                             const resumeAudio = () => {
                                 if (this.pendingAudioPlay && this.currentAudio) {
-                                    this.currentAudio.play().catch(() => { });
+                                    this.currentAudio.play().then(() => {
+                                        document.dispatchEvent(new CustomEvent('ambient-play'));
+                                    }).catch(() => { });
                                     this.pendingAudioPlay = false;
 
                                     // Remove pulse animation

@@ -44,6 +44,8 @@ Date.prototype.strftime = function (format = 'c') {
           Y: date.getFullYear(),
           H: date.getHours(),
           h: date.getHours().pad(),
+          I: (date.getHours() % 12 || 12).pad(),
+          l: (date.getHours() % 12 || 12),
           p: date.getHours() >= 12 ? 'PM' : 'AM',
           o: date.getDate().ord(),
           M: date.getMinutes(),

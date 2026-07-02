@@ -33,6 +33,7 @@ class SettingsPanel extends Component {
                 weather: true,
                 ambient: true,
                 search: true,
+                clock24h: false,
             },
 
             userName: CONFIG.userName || 'User',
@@ -570,6 +571,10 @@ class SettingsPanel extends Component {
                                 <div class="toggle-row">
                                     <span class="toggle-label">Ambient Player</span>
                                     <div class="toggle ${this.userSettings.widgets.ambient ? 'on' : ''}" data-widget="ambient"></div>
+                                </div>
+                                <div class="toggle-row">
+                                    <span class="toggle-label">24-Hour Clock</span>
+                                    <div class="toggle ${this.userSettings.widgets.clock24h ? 'on' : ''}" data-widget="clock24h"></div>
                                 </div>
                             </div>
 

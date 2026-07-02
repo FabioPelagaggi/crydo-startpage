@@ -48,7 +48,9 @@ A personalized browser startpage for late night coders, students, and anyone who
 |||
 |-|-|
 |🌧️ **ambient sounds**|rain, sparkle, Dragon Ball Lofi & more|
+|🎵 **ambient memory & progress**|auto-resumes songs across reloads, interactive progress bar & play/pause toggle|
 |⚙️ **in-app settings**|visually configure your startpage (triple-tap or click gear)|
+|🕰️ **clock format options**|toggle between 12-hour (AM/PM) and 24-hour clock formats|
 |🖼️ **custom banners**|20+ lofi animated backgrounds per tab|
 |🌅 **configurable wallpaper**|swap background visually in settings|
 |🎮 **gaming tab**|links for MTG, EDHREC, Scryfall & more|

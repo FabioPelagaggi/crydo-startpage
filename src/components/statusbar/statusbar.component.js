@@ -124,6 +124,67 @@ class Statusbar extends Component {
           width: 1px;
           background: rgba(255, 255, 255, 0.1);
       }
+
+      .progress-container {
+          position: absolute;
+          left: 0;
+          top: -22px;
+          width: 100%;
+          height: 12px;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      .progress-container.visible {
+          opacity: 1;
+          visibility: visible;
+      }
+
+      .progress-play-btn {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.4);
+          margin-right: 12px;
+          transition: all 0.3s ease;
+          flex-shrink: 0;
+      }
+
+      .progress-play-btn:hover {
+          transform: scale(1.2);
+          background: rgba(255, 255, 255, 0.7);
+      }
+
+      .progress-play-btn.playing {
+          background: var(--flavour, #a9b665);
+          box-shadow: 0 0 8px var(--flavour, #a9b665), 0 0 12px var(--flavour, #a9b665);
+      }
+
+      .progress-play-btn.playing:hover {
+          background: var(--flavour, #a9b665);
+          filter: brightness(1.2);
+      }
+
+      .progress-track {
+          width: 100%;
+          height: 4px;
+          background: rgba(255, 255, 255, 0.15);
+          border-radius: 4px;
+          overflow: hidden;
+      }
+
+      .progress-fill {
+          height: 100%;
+          width: 0%;
+          background: var(--flavour, #a9b665);
+          border-radius: 4px;
+          box-shadow: 0 0 12px var(--flavour, #a9b665), 0 0 20px var(--flavour, #a9b665);
+          transition: width 0.1s linear;
+      }
     `;
     }
 
@@ -134,6 +195,14 @@ class Statusbar extends Component {
         <div id="tabs">
             <cols>
                 <ul class="- indicator"></ul>
+                
+                <div class="progress-container" id="music-progress">
+                    <div class="progress-play-btn" id="music-play-btn" title="Pause/Play"></div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="music-progress-fill"></div>
+                    </div>
+                </div>
+
                 <div class="+ widgets col-end">
                     ${widgets.crypto ? '<crypto-widget class="+ widget"></crypto-widget>' : ''}
                     <current-time class="+ widget"></current-time>
@@ -224,6 +293,51 @@ class Statusbar extends Component {
             this.createTabs();
             this.setEvents();
             this.openLastVisitedTab();
+            
+            const progressContainer = this.shadow.getElementById('music-progress');
+            const progressFill = this.shadow.getElementById('music-progress-fill');
+            const playBtn = this.shadow.getElementById('music-play-btn');
+            
+            if (progressContainer && progressFill && playBtn) {
+                document.addEventListener('ambient-timeupdate', (e) => {
+                    const { currentTime, duration } = e.detail;
+                    const percentage = (currentTime / duration) * 100;
+                    progressFill.style.width = `${percentage}%`;
+                });
+                
+                document.addEventListener('ambient-play', () => {
+                    progressContainer.classList.add('visible');
+                    playBtn.classList.add('playing');
+                });
+                
+                document.addEventListener('ambient-pause', () => {
+                    playBtn.classList.remove('playing');
+                });
+                
+                document.addEventListener('ambient-stop', () => {
+                    progressContainer.classList.remove('visible');
+                    progressFill.style.width = '0%';
+                    playBtn.classList.remove('playing');
+                });
+
+                playBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    document.dispatchEvent(new CustomEvent('ambient-toggle-pause'));
+                });
+
+                progressContainer.addEventListener('click', (e) => {
+                    const track = progressContainer.querySelector('.progress-track');
+                    if (!track) return;
+                    const rect = track.getBoundingClientRect();
+                    // Make sure click was within the track area
+                    if (e.clientX < rect.left || e.clientX > rect.right) return;
+                    const x = e.clientX - rect.left;
+                    const percentage = x / rect.width;
+                    document.dispatchEvent(new CustomEvent('ambient-seek', {
+                        detail: { percentage }
+                    }));
+                });
+            }
         });
     }
 }
