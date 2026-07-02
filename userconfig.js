@@ -28,6 +28,7 @@ const default_config = {
   fastlink: "https://chat.openai.com/",
   openLastVisitedTab: true,
   userName: "crydo",
+  wallpaper: "src/img/kamehouse.jpg",
 
   customQuotes: [
   ],
@@ -486,5 +487,14 @@ if (savedSearchEngines) {
   if (userSettings.userName === 'User' || userSettings.userName === 'Ravi') {
     userSettings.userName = CONFIG.config.userName;
     localStorage.setItem('userSettings', JSON.stringify(userSettings));
+  }
+})();
+
+// Apply wallpaper from config
+(function() {
+  if (default_config.wallpaper) {
+    var style = document.createElement('style');
+    style.textContent = 'body::before { background-image: url(' + default_config.wallpaper + ') !important; }';
+    document.head.appendChild(style);
   }
 })();
